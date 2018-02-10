@@ -11,8 +11,8 @@ layout: default
             </tr>
         </thead>
         <tbody>
-{% assign build = builds[1] %}
-      {% for artifacts in build %}
+{% assign build = builds[1] | sort %}
+      {% assign artifacts = build | last %}
               {% for artifact in artifacts[1] %}
                     {% capture sub_string %}{{'exe'}}{% endcapture %}
                     {% capture some_string %}{{ artifact.pretty_path }}{% endcapture %}
@@ -51,8 +51,6 @@ layout: default
                 <td>{{ artifact.pretty_path }}</td>
             </tr>
                     {% endif %}
-
-{% endfor %}
       {% endfor %}
         </tbody>
     </table>
