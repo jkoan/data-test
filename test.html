@@ -1,0 +1,60 @@
+---
+layout: default
+---
+{% for builds in site.data %}
+<h1>{{ builds[0] }}</h1>
+<table id="example" class="table table-striped table-bordered" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>PATH</th>
+            </tr>
+        </thead>
+        <tbody>
+{% assign build = builds[1] | sort %}
+      {% assign build_size = build | size %}
+      {{ build_size }}
+      {% assign artifacts = build[build_size-1] %}
+              {% for artifact in artifacts[1] %}
+                    {% capture sub_string %}{{'exe'}}{% endcapture %}
+                    {% capture some_string %}{{ artifact.pretty_path }}{% endcapture %}
+
+                    {% assign sub_string_size = sub_string | size %}
+                    {% assign some_string_size = some_string | size %}
+                    {% assign start_index = some_string_size | minus: sub_string_size %}
+                    {% assign result = some_string | slice: start_index, sub_string_size %}
+                    {% if result == 'apk' %}
+            <tr>
+                <td>{{ artifact.url }}</td>
+                <td>{{ artifact.pretty_path }}</td>
+            </tr>
+                    {% endif %}
+                    {% if result == 'exe' %}
+            <tr>
+                <td>{{ artifact.url }}</td>
+                <td>{{ artifact.pretty_path }}</td>
+            </tr>
+                    {% endif %}
+                    {% if result == 'zip' %}
+            <tr>
+                <td>{{ artifact.url }}</td>
+                <td>{{ artifact.pretty_path }}</td>
+            </tr>
+                    {% endif %}
+                    {% if result == 'deb' %}
+            <tr>
+                <td>{{ artifact.url }}</td>
+                <td>{{ artifact.pretty_path }}</td>
+            </tr>
+                    {% endif %}
+                    {% if result == '.sh' %}
+            <tr>
+                <td>{{ artifact.url }}</td>
+                <td>{{ artifact.pretty_path }}</td>
+            </tr>
+                    {% endif %}
+      {% endfor %}
+        </tbody>
+    </table>
+
+{% endfor %}
